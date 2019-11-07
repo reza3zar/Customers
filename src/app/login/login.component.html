@@ -1,0 +1,80 @@
+
+
+
+<div class="app " style="max-width: 700px; margin: 0px auto">
+  <button class="login" [ngClass]="{'active': this.isSignIn,'inactive': this.isSingUp}"   (click)="signToSystem(true)">
+    <img src="../../assets/icon/security.png"/> 
+    
+    ورود
+  </button>
+  <button for="signup" [ngClass]="{'inactive': this.isSignIn,'active': this.isSingUp}"    class="signup" (click)="signToSystem(false)">
+  <img src="../../assets/icon/hospital.png"/> 
+    ثبت نام
+  </button>
+  
+  <form class="login-form" [ngClass]="{'hide': !this.isSignIn}" [formGroup]="form"  >
+    <h2>ورود به سامانه</h2>
+
+  <img class="img" src="../../assets/icon/fingerprint.png"/> 
+    <input type="text" placeholder="نام کاربری"  type="text"  autocomplete="off"  formControlName="userName"  [(ngModel)]="logininformation.userName"   ngkeyd  name="userName"  (keyup)="keyPressUserName($event)"   [ngClass]="{'ltr': usernamehasValue,'rtl': !usernamehasValue}" >
+    <input type="password" placeholder="شناسه عبور" autocomplete="off"  name="password" (keyup)="keyPressPassword($event)"  formControlName="password"  [(ngModel)]="logininformation.password"  [ngClass]="{'ltr': PasswordValue,'rtl': !PasswordValue}">
+ 
+
+    <div class="boxCaptcha">
+
+      <div class="row">
+
+        <div class=" container-fluid col-lg-5 col-md-5 col-sm-6   ">
+        
+
+              <div class=" row " >
+                  <div class="col-lg-3 col-md-3 col-sm-4 col-3">   <img (click)="refreshChaptcha()" style="cursor: pointer" src="../../assets/icon/refresh.png"/> </div>
+                  <div class="col-lg-9 col-md-9 col-sm-8 col-9" style="z-index: 11111111">
+                <img class="captcha" *ngIf="imgCaptchaIsloadedState" src="data:image/gif;base64,{{imgCaptcha}}"/> 
+                <div class="loader" *ngIf="!imgCaptchaIsloadedState"> </div>
+
+                    </div>
+                </div>
+        </div>
+
+        <div class="container-fluid col-lg-7 col-md-7 col-sm-6   ">
+            <input id="captcha" type="text" autocomplete="off" formControlName="captchaValue"  [(ngModel)]="logininformation.captchaCode" placeholder="عبارت را وارد کنید">
+        </div>
+
+      </div>
+
+
+    </div>
+
+ 
+ 
+
+    <div class="can-toggle">
+        <input id="a" type="checkbox" (change)="rememberMeChangeValue()"  formControlName="remeberState"   [(ngModel)]="logininformation.rememberMe" name="remeberState" >
+        <label for="a" style="direction: rtl">
+        <div class="can-toggle__label-text" style="color: white">مرا در خاطر داشته باش</div>
+
+        <div class="can-toggle__switch" data-checked="بلی" data-unchecked="خیر" ></div>
+        </label>
+     </div> 
+
+    <button class="button"  [disabled]="!form.valid" (click)="loginToSystem()">ورود    </button>
+    <p (click)="tst()">فراموشی رمز عبور؟</p>
+  </form> 
+  
+  <form class="signup-form" [ngClass]="{'hide': !this.isSingUp}">
+    <h2>ثبت نام
+
+    </h2>
+    <img class="img" src="../../assets/icon/account.png"/> 
+  <br>
+    <input type="text" placeholder="نام خانوادگی" class="half">
+    <input type="text" placeholder="نام" class="half">
+    <input type="text" placeholder="پست الکترونیکی">
+  <input type="password" placeholder="شناسه عبور">
+    <input type="password" placeholder="تکرار شناسه عبور">
+  
+    <button class="button">ایجاد حساب کاربری</button>
+    <p (click)="signToSystem(true)">هم اکنون کاربر سیستم هستم!</p>
+  </form>
+</div>

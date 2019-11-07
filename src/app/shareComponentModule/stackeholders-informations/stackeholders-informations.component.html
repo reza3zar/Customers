@@ -1,0 +1,354 @@
+
+        <div class="card-body">
+                <div class="row">
+                 <p class="serghat-main  myOrginalFont text-secondary">
+            مرحله ثبت سهامداران یا شرکا
+            <br>
+             لطفا مشخصات سهامداران یا شرکا دارای بیش از 10 درصد سهام(سرمایه) را وارد نمایید.
+
+    </p>
+    <hr>
+</div>
+<form  [formGroup]="requestForm" class="simple-form container"  *ngIf="showNewRequest"  (ngSubmit)="onSubmit()">
+        
+         <div class="panel panel-info">
+             <div class="panel-heading clearfix">
+                 <i class="icon-calendar"></i>
+                 <h3 class="panel-title"></h3>
+             </div>
+
+             <div class="panel-body">
+
+
+
+                 <div class="row">
+                     <div class="col-lg-6 col-sm-12">
+                  
+
+
+
+                                <div class="input-group">
+                                        <div class="input-group-prepend">
+                                             <span class="input-group-text spanGrp"> نــــــــــــام</span>
+                                        </div>
+                                    <input type="text" formControlName="name" ngxOnlyPersianChars  [(ngModel)]="stackeholdersInformation.name"   required  class="form-control inputGrp" />
+                                </div>
+
+
+                        
+                                <div *ngIf="submitted && ctrl.name.errors" class="invalid-feedback">
+                                         <div *ngIf="submitted && ctrl.name.errors.required" class="fontColorError">فیلد نـــام الزامی است</div>
+                                 </div>
+                     </div>
+
+                     <div class="col-lg-6 col-sm-12">
+
+                                 <div class="input-group">
+                                        <div class="input-group-prepend">
+                                             <span class="input-group-text spanGrp spanSmall">ســــــــــــمــــــــت</span>
+                                        </div>
+                                     <app-positions-combo-box type="text" formControlName="position"  [(ngModel)]="stackeholdersInformation.position"    required   ></app-positions-combo-box>
+                                  </div>
+
+                                 <div *ngIf="submitted && ctrl.position.errors" class="invalid-feedback">
+                                          <div *ngIf="submitted && ctrl.position.errors.required" class="fontColorError">فیلد سمت الزامی است</div>
+                                  </div>
+                         </div>
+                     </div>
+
+                 <br />
+
+                 <div class="row">
+                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+
+ 
+
+                                    <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                 <span class="input-group-text spanGrp"> کــد مـــلی</span>
+                                            </div>
+                                            <input type='text'   [imask]="{mask: '0000000000'}" class="form-control inputGrp numberDirection" formControlName="nationalCode"  
+                                            [(ngModel)]="stackeholdersInformation.nationalCode" required type="text"   >
+                                    </div>
+
+
+                                    <div *ngIf=" ctrl.nationalCode.errors?.minlength" class="fontColorError">
+                                            کــد مـــلی باید 10 رقم باشد
+                                     </div> 
+                
+                
+                                     <div *ngIf=" ctrl.nationalCode.errors?.maxlength" class="fontColorError">
+                                            کــد مـــلی باید 10 رقم باشد
+                                      </div> 
+                                    <div *ngIf="submitted && ctrl.nationalCode.errors" class="invalid-feedback">
+                                        <div *ngIf="submitted && ctrl.nationalCode.errors.required" class="fontColorError">فیلد کــد مــلی الزامی است</div>
+                                </div>
+                                    </div>
+
+
+                                    <div class="col-lg-6 col-sm-12">
+
+                                    
+
+
+
+                                            <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                         <span class="input-group-text fontSize spanGrp"> کـــــد پــــســـتــی</span>
+                                                    </div>
+                                                    <input type='text' [(ngModel)]="stackeholdersInformation.postalCode"  [imask]="{mask: '0000000000'}" class="form-control numberDirection inputGrp" formControlName="postalCode"  required formControlName="postalCode"
+                                                    required   />
+                                            </div>
+
+                                            <div *ngIf=" ctrl.postalCode.errors?.minlength" class="fontColorError">
+                                                    کد پستی باید 10 رقم باشد
+                                             </div> 
+                        
+                        
+                                             <div *ngIf=" ctrl.postalCode.errors?.maxlength" class="fontColorError">
+                                                    کد پستی باید 10 رقم باشد
+                                              </div> 
+                                            <div *ngIf="submitted && ctrl.postalCode.errors" class="invalid-feedback">
+                                                     <div *ngIf="submitted && ctrl.postalCode.errors.required" class="fontColorError">فیلد کد پستی الزامی است</div>
+                                             </div>
+                                    </div>
+
+                    </div>
+
+
+                    <br />
+
+                    <div class="row">
+
+                               <div class="col-lg-6 col-sm-12">
+ 
+
+
+                                           <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                     <span class="input-group-text fontSize spanGrp"> حق رای (درصد)</span>
+                                                </div>
+                                                <input type='text' [(ngModel)]="stackeholdersInformation.votingRightPercent"  [imask]="{mask: '000'}" 
+                                                class="form-control inputGrp numberDirection" formControlName="votingRightPercent"  required   required   />
+                                            </div>
+
+
+                                           <div *ngIf="submitted && ctrl.votingRightPercent.errors" class="invalid-feedback">
+                                                    <div *ngIf="submitted && ctrl.votingRightPercent.errors.required" class="fontColorError">فیلد حق رای الزامی است</div>
+                                            </div>
+                                   </div>
+
+                                   <div class="col-lg-6 col-sm-12">
+
+                          
+
+
+                                    <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                 <span class="input-group-text fontSize spanGrp"> سهامداری (درصد)</span>
+                                            </div>
+
+                                            <input type='text' [(ngModel)]="stackeholdersInformation.shareHolderPercent" [imask]="{mask: '000'}" 
+                                            class="form-control inputGrp numberDirection" formControlName="shareHolderPercent"  required         />
+ 
+                                    </div>
+
+                                        <div *ngIf="submitted && ctrl.shareHolderPercent.errors" class="invalid-feedback">
+                                                 <div *ngIf="submitted && ctrl.shareHolderPercent.errors.required" class="fontColorError">فیلد حق رای الزامی است</div>
+                                         </div>
+                                </div>
+                       </div>
+
+                <br />
+                 <div class="row">
+                    <div class="col-lg-12 col-sm-12">
+
+                  
+
+
+                       <div class="input-group">
+                            <div class="input-group-prepend">
+                                 <span class="input-group-text fontSize spanGrp"> نشانی(محل سکونت)</span>
+                            </div>
+                            <textarea rows="4" cols="50" class="form-control" ngxOnlyPersianChars  formControlName="address" [(ngModel)]="stackeholdersInformation.address"
+                            required  class="form-control inputGrp" ></textarea>
+
+                    </div>
+
+
+                            <div *ngIf="submitted && ctrl.shareHolderPercent.errors" class="invalid-feedback">
+                                     <div *ngIf="submitted && ctrl.shareHolderPercent.errors.required" class="fontColorError">فیلد نشانی الزامی است</div>
+                             </div>
+                    </div>
+
+
+
+                 </div>
+                 <br />
+
+             </div>
+             <br />
+ 
+             <div class="row">
+                    <div class="col-xs-6 col-md-6">
+                            <a (click)="cancel()" class="btn btn-danger btn-block btn-lg text-dark">
+                               انصراف</a>
+                        </div>
+
+                    <div class="col-xs-6 col-md-6">
+                        <a
+                            (click)="onSubmit()"
+                         [ngClass]="{ 'not-active': !requestForm.valid }"
+
+                            class="btn btn-success btn-block btn-lg text-dark"> 
+                            ذخیره
+                    </a>
+                    </div>
+             
+             </div>
+
+
+             <br />
+
+
+
+             </div>
+             </form>
+             <div *ngIf="!showNewRequest" >
+                    <div class="row"  >
+                       <div class="col-md-12 col-sm-12 col-xs-12">
+                       <kendo-grid
+                       [data]="gridDataCollection"
+                       (selectionChange)="selected($event)"
+                       [resizable]="true"
+                       [sortable]="{ mode: 'multiple' }"
+                       [selectable]="{ mode: 'single' }"
+                       [sortable]="{
+                           allowUnsort: true,
+                           mode: 'multiple'
+                       }"
+                       [height]="300"
+                   >
+                   <kendo-grid-messages
+                   noRecords="رکوردی برای نمایش یافت نشد!"
+                   pagerItems="کل رکورد"
+                   pagerOf="از"
+                   sortAscending="صعودی"
+                   sortDescending="نزولی"
+                   filter="جستجو"
+                   columns="انتخاب سر ستون"
+                   columnsApply="اعمال"
+                   columnsReset="باز نشانی"
+               >
+               </kendo-grid-messages>
+                       <ng-template kendoGridToolbarTemplate>
+
+                        <button
+                        (click)="createNewRequest()"
+                        class="btn btn-default btn-block"
+                        type="button"
+                    ><i class="fa fa-plus" aria-hidden="true"></i>
+
+                        ایجاد
+                    </button>
+                       </ng-template>
+
+                       <kendo-grid-column
+                           field="name"
+                           title="نام"
+                           [filterable]="false"
+                       >
+                       </kendo-grid-column>
+
+                       <kendo-grid-column
+                       field="position.name"
+                       title="سمت"
+                       [filterable]="false"
+                       >
+                    </kendo-grid-column>
+
+                       <kendo-grid-column
+                       field="nationalCode"
+                       title="کد ملی"
+                       [filterable]="false"
+                       >
+                       </kendo-grid-column>
+
+
+
+                    <kendo-grid-column
+                    field="votingRightPercent"
+                    title="حق رای (درصد)"
+                    [filterable]="false"
+                >
+                </kendo-grid-column>
+
+
+                <kendo-grid-column
+                    field="shareHolderPercent"
+                    title="سهامداری (درصد)"
+                    [filterable]="false"
+                >
+                </kendo-grid-column>
+
+
+                       <kendo-grid-column field="عملیات" [filterable]="false" width="120">
+                           <ng-template kendoGridCellTemplate let-dataItem>
+        
+
+
+                               <div class="row" style="margin-right: 1px">
+                                <button
+                                    type="button"
+                                    class="btn btn-primary  btn-circle"
+                                    [disabled]="disableShowBtn"
+                                    matTooltip="ویرایش"
+                                    (click)="editSelectedItem()">
+                                    <i class="fa fa-save"></i>
+                                </button>
+                                <button
+                                    type="button"
+                                    (click)="deleteSelectedItem()"
+                                    class="btn btn-danger  btn-circle"
+                                    [disabled]="disableShowBtn"
+                                    matTooltip="حذف">
+                                    <i class="fa   fa-times"></i>
+                                </button>
+                        </div>
+
+
+
+                           </ng-template>
+                       </kendo-grid-column>
+
+
+                   </kendo-grid>
+                   </div>
+                </div>
+               <br>
+
+                  
+
+
+                   <div class="row">
+
+                        <div class="col-xs-6 col-md-6">
+                                <a (click)="onPrevious()" class="btn btn-danger btn-block btn-lg text-dark"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+                                   مرحله قبل</a>
+                            </div>
+
+
+                        <div class="col-xs-6 col-md-6">
+                            <a
+                                (click)="onNext()"
+                                class="btn btn-success btn-block btn-lg text-dark"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+                                مرحله بعد
+                        </a>
+                        </div>
+                    
+                </div>
+
+
+                   <br />
+               </div>
+

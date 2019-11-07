@@ -1,0 +1,257 @@
+ 
+
+<div [ngClass]="{ 'fullscreen-inActive': state }">
+<kendo-grid
+    [data]="gridData"
+    (cellClick)="onCellClick($event)"
+    [resizable]="true"
+    [sortable]="{ mode: 'multiple' }"
+    [selectable]="{ mode: 'single' }"
+    (selectionChange)="selected($event)"
+    (sortChange)="sortChange($event)"
+    [sortable]="{
+        allowUnsort: true,
+        mode: 'multiple'
+    }"
+    [sort]="sort"
+    [pageSize]="pageSize"
+    [skip]="skip"
+    [pageable]="true"
+    [filter]="filter"
+    (filterChange)="filterChange($event)"
+    [filterable]="true"
+    (pageChange)="pageChange($event)"
+    [height]="815"
+>
+    <kendo-grid-messages
+        noRecords="رکوردی برای نمایش یافت نشد!"
+        pagerItems="کل رکورد"
+        pagerOf="از"
+        sortAscending="صعودی"
+        sortDescending="نزولی"
+        filter="جستجو"
+        columns="انتخاب سر ستون"
+        columnsApply="اعمال"
+        columnsReset="باز نشانی"
+    >
+    </kendo-grid-messages>
+    <ng-template kendoGridToolbarTemplate>
+        <button
+        (click)="refreshAllRequest()"
+        kendoButton
+        type="button"
+    >
+        به روز رسانی
+    </button>
+
+        <button
+            type="button"
+            kendoButton
+            kendoGridExcelCommand
+            style="margin-left: 2px;margin-right: 2px"
+        >
+            خروجی به اکسل
+        </button>
+    </ng-template>
+
+    <kendo-grid-column
+        field="id"
+        title=" شماره "
+        width="50"
+        [filterable]="false"
+    >
+    </kendo-grid-column>
+
+    <kendo-grid-column
+        field="name"
+        title="نـــام"
+        width="180"
+        [filterable]="true"
+    >
+    </kendo-grid-column>
+
+    <kendo-grid-column
+        field="customerType.name"
+        title="نوع مشتری"
+        width="120"
+        [filterable]="true"
+    >
+    </kendo-grid-column>
+
+        <kendo-grid-column
+            field="brokerName"
+            title="کارگزار"
+            width="110"
+            [filterable]="true">
+        </kendo-grid-column>
+
+        <kendo-grid-column title="زمان ایجاد درخواست" field="requestCreateDateTime"   [filterable]="true" width="110">
+            <ng-template kendoGridCellTemplate let-dataItem>
+                <span style="direction: ltr">
+                    {{ dataItem.requestCreateDateTime}}
+                </span>
+            </ng-template>
+    </kendo-grid-column>
+
+    <kendo-grid-column
+        field="requestType.name"
+        title="نوع درخواست"
+        width="120"
+        [filterable]="true"
+    >
+    </kendo-grid-column>
+
+ 
+    <kendo-grid-column title="وضعیت درخواست" field="requestStatus.name"   [filterable]="true" width="110">
+            <ng-template kendoGridCellTemplate let-dataItem>
+                <span [class.classActiveRequest]="dataItem.requestStatus.id==1" [class.classSentRequest]="dataItem.requestStatus.id==3">
+                    {{ dataItem.requestStatus.name }}
+                </span>
+            </ng-template>
+    </kendo-grid-column>
+
+    <kendo-grid-column field="spotMarket" title="متقاضی نقدی" width="90"   [filterable]="false">
+            <ng-template kendoGridCellTemplate let-dataItem>
+                <input type="checkbox" [checked]="dataItem.spotMarket" disabled/>
+            </ng-template>
+    </kendo-grid-column>
+
+    <kendo-grid-column field="derivativesMarket" title="متقاضی مشتقه" width="90"  [filterable]="false">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <input type="checkbox"  [checked]="dataItem.derivativesMarket" disabled/>
+                </ng-template>
+    </kendo-grid-column>
+
+    <kendo-grid-column field="عملیات" width="215" [filterable]="false">
+            <ng-template kendoGridCellTemplate let-dataItem>
+
+
+              
+                <div class="row" style="margin-right: 1px " kendoTooltip>
+                    <button
+                        nbTooltip="نمایش تاریخچه" nbTooltipStatus="primary"
+                        type="button"
+                        nbButton outline
+                        (click)="showTimeLineHistory()"
+                        [disabled]="checkIsSelectedRow(dataItem.id)"
+                        class="btn btn-primary  btn-circle" >
+                        <i class="fa fa-list-ol"></i>
+                   </button>
+
+                    <button
+                    nbTooltip="مشاهده درخواست" nbTooltipStatus="warning"
+                     type="button"
+                     nbButton  outline
+                     status="warning"
+                     class="btn  btn-warning btn-circle"
+                    [disabled]="checkIsSelectedRow(dataItem.id)"
+
+                 >
+                     <i class="fa fa-exclamation"></i>
+                 </button>
+
+
+                    <button
+                        nbTooltip="تایید درخواست" nbTooltipStatus="success"
+                        type="button"
+                        nbButton  outline
+                        status="success"
+                        (click)="responseRequest(false)"
+                        class="btn btn-success  btn-circle"
+                    [disabled]="checkIsSelectedRow(dataItem.id)"
+
+                         >
+                        <i class="fa fa-check"></i>
+                    </button>
+
+                    <button
+                    nbTooltip="رد درخواست" nbTooltipStatus="danger"
+                    type="button"
+                    nbButton  outline 
+                    [disabled]="checkIsSelectedRow(dataItem.id)"
+                    status="danger"
+                    class="myOrginalFont btn btn-danger  btn-circle"
+                    (click)="responseRequest(true)"
+                >
+                    <i class="fa fa-times"></i>
+                </button>
+       
+                </div>
+
+      
+                <ng-template
+                    kendoPagerTemplate
+                    let-totalPages="totalPages"
+                    let-currentPage="currentPage">
+                    <kendo-pager-prev-buttons></kendo-pager-prev-buttons>
+                    <kendo-pager-numeric-buttons
+                        [buttonCount]="12"
+                    ></kendo-pager-numeric-buttons>
+                    <kendo-pager-info></kendo-pager-info>
+                    <kendo-pager-next-buttons></kendo-pager-next-buttons>
+                    <kendo-pager-page-sizes
+                        [pageSizes]="[12, 120, 240]"
+                    ></kendo-pager-page-sizes>
+                </ng-template>
+            </ng-template>
+        </kendo-grid-column>
+
+    
+    <kendo-grid-excel
+        fileName="request.xlsx"
+        [fetchData]="allData"
+    ></kendo-grid-excel>
+</kendo-grid>
+
+<div *ngIf="loadingGrid" class="k-i-loading"></div>
+
+
+</div>
+
+
+<ng-template #contentTemplate let-data>
+    <p class="myOrginalFont">  "{{ data.text }}"</p>
+</ng-template>
+
+<ng-template #contentTemplateResponsebrokerRequest let-data>
+
+    <div class="row container">
+            <div class="input-group">
+                    <div class="input-group-prepend">
+                         <span class="input-group-text spanGrp"> شـــــــــــرح </span>
+                    </div>
+                    <textarea rows="4" ngxOnlyPersianChars cols="50" class="form-control inputGrp"  
+                      class="form-control inputGrp" [(ngModel)]="description" > </textarea>
+            </div>
+    </div>
+ <br/>
+ <div class="row container">
+        <div class="col-xs-6 col-md-6">
+                <button   class="btn btn btn-danger  btn-block  colorWhite text-dark" (click)="closeModal()">
+                   انصراف</button>
+            </div>
+            
+                <div class="col-xs-6 col-md-6">
+                    <button  *ngIf="statusOfResponseIsReject"
+                        (click)="rejectSelectedRequest()"
+                        [ngClass]="{'m-progress':sendDataToServer}"
+                        [disabled]="description=='' ||description.length==0"
+                        class="btn  btn-success btn-block  colorWhite text-dark"> 
+                        رد درخواست  </button>
+
+                        <button  *ngIf="!statusOfResponseIsReject"
+                        (click)="acceptSelectedRequest()"
+                        [ngClass]="{'m-progress':sendDataToServer}"
+                        [disabled]="description=='' ||description.length==0"
+                        class="btn btn-success btn-block colorWhite text-dark"> 
+                           تایید درخواست </button>
+                </div>
+           
+         </div>
+
+</ng-template>
+
+<ng-template #contentHistoryOfRejectDescriptions let-data>
+    <ngx-time-line [timeLineCollection]="timeLineCollection"></ngx-time-line>
+ </ng-template>
+ 

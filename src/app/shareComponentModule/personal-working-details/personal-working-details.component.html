@@ -1,0 +1,216 @@
+<form [formGroup]="requestForm" class="simple-form" (ngSubmit)="onSubmit()">
+    <div class="panel panel-info">
+        <div class="panel-heading clearfix">
+            <i class="icon-calendar"></i>
+            <h3 class="panel-title"></h3>
+        </div>
+
+        <div class="card-body">
+                <div class="row">
+                 <p class="serghat-main  myOrginalFont text-secondary">
+                    مرحله اطلاعات شلغی
+                    <br />
+                    لطفا اطلاعات شغلی خود را وارد نمایید.
+                </p>
+                <hr />
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-sm-12">
+              
+
+
+                    <div class="input-group">
+                            <div class="input-group-prepend">
+                                 <span class="input-group-text spanGrp"> عنوان شغل</span>
+                            </div>
+                            <input
+                            type="text"
+                            ngxOnlyPersianChars
+                            formControlName="jobTitle"
+                            [(ngModel)]="workingInfo.jobTitle"
+                            required
+                            class="form-control inputGrp"
+                        />
+                    </div>
+
+
+
+                    <div
+                        *ngIf="submitted && ctrl.jobTitle.errors"
+                        class="invalid-feedback"
+                    >
+                        <div
+                            *ngIf="submitted && ctrl.jobTitle.errors.required"
+                            class="fontColorError"
+                        >
+                            فیلد عنوان شغل الزامی است
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-sm-12">
+  
+
+
+                        <div class="input-group">
+                                <div class="input-group-prepend">
+                                     <span   class="input-group-text spanGrp spanSmall">ت.اشتغال</span>
+                                     <dp-date-picker
+                                     class=""
+                                     dir="rtl"
+                                     formControlName="jobDate"
+                                     mode="day"
+                                     [(ngModel)]="dateObject"
+                                      
+                                     placeholder="تاریخ اشتغال"
+                                     theme="dp-material"
+                                 >
+                                 </dp-date-picker>
+                             </div>
+                          </div>
+
+                    <div
+                        *ngIf="submitted && ctrl.jobDate.errors"
+                        class="invalid-feedback"
+                    >
+                        <div
+                            *ngIf="submitted && ctrl.jobDate.errors.required"
+                            class="fontColorError"
+                        >
+                            فیلد تاریخ اشتغال الزامی است
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+
+            <div class="row">
+                <div class="col-lg-6 col-sm-12">
+              
+
+                    <div class="input-group">
+                            <div class="input-group-prepend">
+                                 <span class="input-group-text spanGrp">نام شرکت</span>
+                            </div>
+
+                                <input
+                                type="text"
+                                ngxOnlyPersianChars
+                                formControlName="companyName"
+                                [(ngModel)]="workingInfo.companyName"
+                                 
+                                class="form-control inputGrp"/>
+                    </div>
+                    
+
+                    
+                    <div
+                        *ngIf="submitted && ctrl.companyName.errors"
+                        class="invalid-feedback"
+                    >
+                        <div
+                            *ngIf="
+                                submitted && ctrl.companyName.errors.required
+                            "
+                            class="fontColorError"
+                        >
+                            فیلد نام شرکت الزامی است
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-sm-12">
+
+ 
+
+                     <div class="input-group">
+                            <div class="input-group-prepend">
+                                 <span class="input-group-text spanGrp">سمت</span>
+                            </div>
+
+                                <input
+                                type="text"
+                                formControlName="position"
+                                [(ngModel)]="workingInfo.position"
+                                ngxOnlyPersianChars
+                                class="form-control inputGrp"
+                            />
+                    </div>
+
+                    <div
+                        *ngIf="submitted && ctrl.position.errors"
+                        class="invalid-feedback"
+                    >
+                        <div
+                            *ngIf="submitted && ctrl.position.errors.required"
+                            class="fontColorError"
+                        >
+                            فیلد سمت الزامی است
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+
+            <div class="row">
+                <div class="col-lg-6 col-sm-12">
+
+   
+
+                    <div class="input-group">
+                            <div class="input-group-prepend">
+                                 <span class="input-group-text spanGrp spanSmall">میزان تحصیلات</span>
+                            </div>
+                            <app-education-combo-box
+                            type="text"
+                            formControlName="educationLevel"
+                            [(ngModel)]="workingInfo.educationLevel"
+                            required
+                        ></app-education-combo-box>
+                      </div>
+
+
+                    <div
+                        *ngIf="submitted && ctrl.educationLevel.errors"
+                        class="invalid-feedback"
+                    >
+                        <div
+                            *ngIf="
+                                submitted && ctrl.educationLevel.errors.required
+                            "
+                            class="fontColorError"
+                        >
+                            فیلد میزان تحصیلات الزامی است
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+        </div>
+        <br />
+
+        
+
+
+        <div class="row">
+                <div class="col-xs-6 col-md-6">
+                        <a (click)="onPrevious()" class="btn btn-danger btn-block btn-lg text-dark"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+                           مرحله قبل</a>
+                    </div>
+                    
+                <div class="col-xs-6 col-md-6">
+                    <a
+                        (click)="onSubmit()"
+                        [ngClass]="{ 'not-active': !requestForm.valid }"
+
+                        class="btn btn-success btn-block btn-lg text-dark"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+                        مرحله بعد
+                </a>
+                </div>
+        
+        </div>
+
+
+        <br />
+    </div>
+</form>
